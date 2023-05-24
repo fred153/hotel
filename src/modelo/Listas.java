@@ -2,7 +2,6 @@ package modelo;
 public class Listas <T>{
      Nodo<T> Head;
     int size;
-    int i=0;
 public Listas() {
         this.Head = null;
         this.size = 0;
@@ -36,10 +35,11 @@ public Listas() {
         imprimir(n1.getSiguiente());
     }
     public void pop1(double a){
+        System.out.println(this.Head.getElemento());
         Nodo<T> aux=new Nodo<>();
         Nodo<T> aux1=new Nodo<>();
         aux=this.getHead();
-        aux1.setElemento((T)new Cliente(" ",0,0,a));
+        aux1.setElemento((T)new Cliente(" ",0,0,a,false,false,false));
         if(isEmpty()){
             return;
         }
@@ -71,60 +71,35 @@ public Listas() {
             }
         }
     }
-    public Cliente encontrar(double a){
-        return this.encontrar1(this.Head,a);
-    }
-    private Cliente encontrar1(Nodo<T> n1,double a){
-        Nodo<T> aux=new Nodo<>();
-        Nodo<T> aux1=new Nodo<>();
-        aux=this.getHead();
-        aux1.setElemento((T)new Cliente(" ",0,0,a));
-        if(isEmpty()){
-            return null;
+public Cliente encontrar(double a) {
+    return encontrar1(this.getHead(), a);
+}
+
+private Cliente encontrar1(Nodo<T> n1, double a) {
+    Nodo<T> aux = n1;
+    while (aux != null) {
+        Cliente este = (Cliente) aux.getElemento();
+        if (este.getNumH() == a) {
+            return este;
         }
-        else{
-             Cliente este=new Cliente();
-        Cliente este1=new Cliente();
-        este= (Cliente) aux1.getElemento();
-        este1= (Cliente) aux.getElemento();
-            if(este.getNumH()==este1.getNumH()){
-             this.Head.setElemento(this.Head.getSiguiente().getElemento());
-             this.setSize(this.getSize()-1);
-             aux1=null;
-            }
-            while(aux.getElemento()!=null){
-                aux=aux.getSiguiente();
-                este1= (Cliente) aux.getElemento();
-                if(este.getNumH()==este1.getNumH()){
-                    break;
-                }
-            }
-        }
-        return (Cliente)aux.getElemento();
+        aux = aux.getSiguiente();
     }
-    public void ingresar(T element){
-    Nodo<T> nuevo=new Nodo<>();
-    Nodo<T> aux=new Nodo<>();
+    return null;
+}
+    public void ingresar(T element) {
+    Nodo<T> nuevo = new Nodo<>();
     nuevo.setElemento(element);
-    if(this.isEmpty()){
-        this.setHead(nuevo);
-    }
-    else{
-        if((this.getHead().getSiguiente())==null){
-        this.getHead().setSiguiente(nuevo);
+
+    if (isEmpty()) {
+        setHead(nuevo);
+    } else {
+        Nodo<T> aux = getHead();
+        while (aux.getSiguiente() != null) {
+            aux = aux.getSiguiente();
         }
-        else{
-        aux=this.getHead();
-        while(aux.getElemento()!=null){
-            if(aux.getSiguiente()==null){
-            aux.setSiguiente(nuevo);
-            }
-            else{
-            aux=aux.getSiguiente();
-            }
-        }
-        }
+        aux.setSiguiente(nuevo);
     }
-    this.setSize(this.getSize()+1);
-    }
+
+    setSize(getSize() + 1);
+}
 }
